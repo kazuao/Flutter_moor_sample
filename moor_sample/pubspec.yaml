@@ -1,0 +1,33 @@
+name: moor_sample
+description: A new Flutter application.
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.0
+
+  # add
+  moor_flutter: ^1.6.0
+  provider: ^3.0.0+1
+  flutter_slidable: ^0.5.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # add
+  moor_generator: ^1.6.0
+  build_runner: ^1.6.0
+
+flutter:
+
+
+  uses-material-design: true
