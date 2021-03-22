@@ -11,15 +11,15 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.0
-  moor_flutter: ^1.5.0
-  moor: ^1.5.1
+  moor_flutter: ^1.6.0
   provider:
   flutter_slidable: ^0.5.3
+  flutter_material_color_picker: ^1.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  moor_generator: ^1.5.0
+  moor_generator: ^1.6.0
   build_runner:
 
 flutter:

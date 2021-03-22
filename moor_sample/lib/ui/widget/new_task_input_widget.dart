@@ -13,6 +13,7 @@ class NewTaskInput extends StatefulWidget {
 
 class _NewTaskInputState extends State<NewTaskInput> {
   DateTime newTaskDate;
+  Tag selectedTag;
   TextEditingController controller;
 
   @override
@@ -30,6 +31,7 @@ class _NewTaskInputState extends State<NewTaskInput> {
         children: [
           _buildTextField(context),
           _buildDateButton(context),
+          _buildTagSelector(context),
         ],
       ),
     );
@@ -53,6 +55,58 @@ class _NewTaskInputState extends State<NewTaskInput> {
     );
   }
 
+  StreamBuilder<List<Tag>> _buildTagSelector(BuildContext context) {
+    return StreamBuilder(
+      stream: Provider.of<TagDao>(context).watchTags(),
+      builder: (context, snapshot) {
+        final tags = snapshot.data ?? [];
+
+        DropdownMenuItem<Tag> dropdownFromTag(Tag tag) {
+          return DropdownMenuItem(
+            value: tag,
+            child: Row(
+              children: [
+                Text(tag.name),
+                SizedBox(width: 5),
+                Container(
+                  width: 15,
+                  height: 15,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color(tag.color),
+                  ),
+                )
+              ],
+            ),
+          );
+        }
+
+        final dropdownMenuItems =
+            tags.map((tag) => dropdownFromTag(tag)).toList()
+              ..insert(
+                0,
+                DropdownMenuItem(
+                  value: null,
+                  child: Text('No Tag'),
+                ),
+              );
+
+        return Expanded(
+          child: DropdownButton(
+            onChanged: (Tag tag) {
+              setState(() {
+                selectedTag = tag;
+              });
+            },
+            isExpanded: true,
+            value: selectedTag,
+            items: dropdownMenuItems,
+          ),
+        );
+      },
+    );
+  }
+
   IconButton _buildDateButton(BuildContext context) {
     return IconButton(
       icon: Icon(Icons.calendar_today),
@@ -70,6 +124,7 @@ class _NewTaskInputState extends State<NewTaskInput> {
   void resetValuesAfterSubmit() {
     setState(() {
       newTaskDate = null;
+      selectedTag = null;
       controller.clear();
     });
   }
